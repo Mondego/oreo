@@ -37,7 +37,19 @@
 			<zipgroupfileset dir="${lib}" includes="**/*.jar" />
 		</jar>
 	</target>
+	
+	<target name="MetricHttpServer" depends="compile">
+	        <mkdir dir="${jar.dir}" />
+	        <jar destfile="${jar.dir}/${metricJar}.jar" basedir="${classes.dir}">
+	            <manifest>
+	                <attribute name="Main-Class" value="uci.mondego.http.BasicHttpServer" />
+	            </manifest>
+	            <zipgroupfileset dir="${lib}" includes="**/*.jar" />
+	        </jar>
+    </target>
 
 	<!--     <target name="clean-build" depends="clean,jar"/> -->
 	<target name="metric" depends="JarMetric" />
+	<target name="http" depends="MetricHttpServer" />
 </project>
+
