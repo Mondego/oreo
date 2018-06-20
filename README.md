@@ -49,7 +49,8 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  change directory to oreo/input/dataset/  
  Copy the above file (mlcc_input.file) to this location and rename the file to blocks.file. Make sure there is no other file present at this location.
  ```
- Oreo has two components, one which produces possible candidates and other which consumes this candidates and predicts whether they are clone pairs or not. 
+ Oreo has two components, one which produces possible candidates 
+ and other which consumes this candidates and predicts whether they are clone pairs or not. 
  To run Oreo, we need to tell Oreo where these candidates will be generated. 
  ```
  now change the directory to Oreo's root directory, that is to oreo/
@@ -57,7 +58,8 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  ```
  (we reused a lot of code from SourcererCC to make Oreo, and hence the name sourcerercc.properties.)
  ```
- change the value of the property CANDIDATES_DIR to contain the absolute path where you want the possible candidate clone pairs to be generated.
+ change the value of the property CANDIDATES_DIR to contain 
+ the absolute path where you want the possible candidate clone pairs to be generated.
  
  Now open oreo/python_scripts/Predictor.py in an editor.
  In this file, you need to provide paths to 3 variables.
@@ -67,7 +69,13 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  
  self.output_dir. The absolute path to the directory where you want the clone pairs to be reported.
  
- self.modelfilename_type31. the absolute path to the trained model which will be used by the Predictor. This trained model can be downloaded from this link: Line to Model.
+ self.modelfilename_type31. the absolute path to the trained model 
+ which will be used by the Predictor. 
+ 
+ This trained model can be downloaded from this link:
+ 
+ https://drive.google.com/open?id=1TiKTWFn9T7XMdvFwl7lIzwxEqjoDvrbq
+ 
  ```
  ### Install dependencies.
  The best way to install dependencies is by creating a virtual evironment (venv) for Python.
