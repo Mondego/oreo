@@ -45,17 +45,21 @@
  ```
  change directory to oreo/input/dataset/  
  Copy the above file (mlcc_input.file) to this location and rename the file to blocks.file. Make sure there is no other file present at this location.
+ ```
  Oreo has two components, one which produces possible candidates and other which consumes this candidates and predicts whether they are clone pairs or not. 
  To run Oreo, we need to tell Oreo where these candidates will be generated. 
+ ```
  now change the directory to Oreo's root directory, that is to oreo/
  open the file sourcerercc.properties.
+ ```
  (we reused a lot of code from SourcererCC to make oreo, and hence the name sourcerercc.properties.)
+ ```
  change the value of the property CANDIDATES_DIR to contain the absolute path where you want the possible candidate clone pairs to be generated.
  
  Now open oreo/python_scripts/Predictor.py in an editor.
  In this file, you need to provide paths to 3 variables.
  
- 
+
  self.candidates_dir. This path should be same as the path provided in sourcerercc.properties (CANDIDATES_DIR)
  
  self.output_dir. The absolute path to the directory where you want the clone pairs to be reported.
