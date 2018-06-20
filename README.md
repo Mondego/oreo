@@ -15,22 +15,24 @@
  Each line in this text file corresponds to a dataset. If you only have one dataset to process, you just need to have one line in this file.
  example:
  if the dataset is present at `/home/user/vaibhav/java_dataset.zip`
- then, the `file_with_dataset_path.txt` will contain just one line, which is
- `/home/user/vaibhav/java_dataset.zip`
+ then, the `file_with_dataset_path.txt` will contain just one line, which is  
+ `/home/user/vaibhav/java_dataset.zip`  
  If you have more than one datasets, you can provide their paths in separat lines.
 
 
  Follow the following steps to generate input
-
+```
  In a terminal, go to the root folder of Oreo. 
  Change directory to java-parser
  
  run ant command to create jar
+ 
  `ant metric`
 
  run jar with following command
+ 
  `java -jar dist/metricCalculator.jar <input_mode> <file_with_dataset_path>`
-
+```
  input_mode is one of `zip`, `tgz`, or `dir`
  file_with_dataset_path is the absolute path to the file which contains the absolute path to the dataset
 
@@ -52,16 +54,23 @@
  Now open `oreo/python_scripts/Predictor.py` in an editor.
  In this file, you need to provide paths to 3 variables.
  
+ 
  `self.candidates_dir`. This path should be same as the path provided in sourcerercc.properties (CANDIDATES_DIR)
+ 
  `self.output_dir`. The absolute path to the directory where you want the clone pairs to be reported.
+ 
  `self.modelfilename_type31`. the absolute path to the trained model which will be used by the Predictor. This trained model can be downloaded from this link: Line to Model.
  
  ## Running Oreo
  After settip up Oreo, follow the following steps to run it.
  
  from the root of Oreo run following command.
+ 
  `python controller.py 1`
+ 
  This will run the code to generate candidate pairs. 
  Now, open another terminal and change directory to oreo/python_scripts. and Run following command 
+ 
  `python runPredictor.sh`
+ 
  This will consume candidates and produce clone pairs in the output directory. 
