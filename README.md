@@ -13,53 +13,55 @@
 
  Before we go further, you will need to create a text file. To make things easier let's call this file file_with_dataset_path.txt. Metric Calculator reads this text file to get the absolute path of the datasets it need to process.
  Each line in this text file corresponds to a dataset. If you only have one dataset to process, you just need to have one line in this file.
+ ```
  example:
- if the dataset is present at `/home/user/vaibhav/java_dataset.zip`
- then, the `file_with_dataset_path.txt` will contain just one line, which is  
- `/home/user/vaibhav/java_dataset.zip`  
- If you have more than one datasets, you can provide their paths in separat lines.
-
+ if the dataset is present at /home/user/vaibhav/java_dataset.zip
+ then, the file_with_dataset_path.txt will contain just one line, which is  
+ /home/user/vaibhav/java_dataset.zip  
+ If you have more than one datasets, you can provide their paths in separat lines.  
+```
 
  Follow the following steps to generate input
 ```
- In a terminal, go to the root folder of Oreo. 
+ In a terminal, go to the root folder of Oreo.
  Change directory to java-parser
  
  run ant command to create jar
  
- `ant metric`
+ ant metric
 
  run jar with following command
  
- `java -jar dist/metricCalculator.jar <input_mode> <file_with_dataset_path>`
+ java -jar dist/metricCalculator.jar <input_mode> <file_with_dataset_path>
 ```
- input_mode is one of `zip`, `tgz`, or `dir`
- file_with_dataset_path is the absolute path to the file which contains the absolute path to the dataset
+ input_mode is one of `zip`, `tgz`, or `dir`  
+ file_with_dataset_path is the absolute path to the file which contains the absolute path to the dataset  
 
  When the process ends, an output file named mlcc_input.file will be created. This file can be now used as an input for Oreo.
  To find this file on the filesystem, look for a folder with a sufix `_metric_output`. This folder will be sibling to the directory which contains the `<file_with_dataset_path>` file. 
  I know this is confusin, in future, we will make it simpler.
 
 ## Setting Up Oreo
- 
- change directory to oreo/input/dataset/
- Copy the above file (`mlcc_input.file`) to this location and rename the file to `blocks.file`. Make sure there is no other file present at this location.
+ ```
+ change directory to oreo/input/dataset/  
+ Copy the above file (mlcc_input.file) to this location and rename the file to blocks.file. Make sure there is no other file present at this location.
  Oreo has two components, one which produces possible candidates and other which consumes this candidates and predicts whether they are clone pairs or not. 
  To run Oreo, we need to tell Oreo where these candidates will be generated. 
  now change the directory to Oreo's root directory, that is to oreo/
  open the file sourcerercc.properties.
  (we reused a lot of code from SourcererCC to make oreo, and hence the name sourcerercc.properties.)
- change the value of the property `CANDIDATES_DIR` to contain the absolute path where you want the possible candidate clone pairs to be generated.
+ change the value of the property CANDIDATES_DIR to contain the absolute path where you want the possible candidate clone pairs to be generated.
  
- Now open `oreo/python_scripts/Predictor.py` in an editor.
+ Now open oreo/python_scripts/Predictor.py in an editor.
  In this file, you need to provide paths to 3 variables.
  
  
- `self.candidates_dir`. This path should be same as the path provided in sourcerercc.properties (CANDIDATES_DIR)
+ self.candidates_dir. This path should be same as the path provided in sourcerercc.properties (CANDIDATES_DIR)
  
- `self.output_dir`. The absolute path to the directory where you want the clone pairs to be reported.
+ self.output_dir. The absolute path to the directory where you want the clone pairs to be reported.
  
- `self.modelfilename_type31`. the absolute path to the trained model which will be used by the Predictor. This trained model can be downloaded from this link: Line to Model.
+ self.modelfilename_type31. the absolute path to the trained model which will be used by the Predictor. This trained model can be downloaded from this link: Line to Model.
+ ```
  
  ## Running Oreo
  After settip up Oreo, follow the following steps to run it.
