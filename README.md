@@ -42,6 +42,9 @@
  I know this is confusin, in future, we will make it simpler.
 
 ## Setting Up Oreo
+
+Before going futher, make sure you have Java 8 and Python3.6 installed.
+
  ```
  change directory to oreo/input/dataset/  
  Copy the above file (mlcc_input.file) to this location and rename the file to blocks.file. Make sure there is no other file present at this location.
@@ -52,7 +55,7 @@
  now change the directory to Oreo's root directory, that is to oreo/
  open the file sourcerercc.properties.
  ```
- (we reused a lot of code from SourcererCC to make oreo, and hence the name sourcerercc.properties.)
+ (we reused a lot of code from SourcererCC to make Oreo, and hence the name sourcerercc.properties.)
  ```
  change the value of the property CANDIDATES_DIR to contain the absolute path where you want the possible candidate clone pairs to be generated.
  
@@ -66,7 +69,22 @@
  
  self.modelfilename_type31. the absolute path to the trained model which will be used by the Predictor. This trained model can be downloaded from this link: Line to Model.
  ```
+ ### Install dependencies.
+ The best way to install dependencies is by creating a virtual evironment (venv) for Python.
+ Create a virtual environment using following command 
+ ```
+ python3 -m venv /path/to/new/virtual/environment
+ ```
  
+ Start the virtual environment:
+```
+ source /path/to/new/virtual/environment/bin/activate
+```
+ Change to oreo/python_scripts/dependencies/ directory
+ run following command to install the dependencies
+ ```
+ pip install -r dependencies.txt
+```
  ## Running Oreo
  After settip up Oreo, follow the following steps to run it.
  
