@@ -11,33 +11,26 @@
  To generate this input file you can use a tool called `Metric Calculator`, which we provide with Oreo. The tool needs to know the path of the dataset for which this input file needs to be created. 
  We support dataset in various formats like `tgz`, `zip`, or usual `linux directory`. If the dataset is presented as a `zip` file, the Metric Claculator will go throught the zip will and all the subdirectories inside it looking for the .java files. It will then calculate metrics of the methods found in these files. And finally it will create an output file where each line corresponds to information about one method. This file then can be used as an input to Oreo.
 
- Before we go further, you will need to create a text file. To make things easier let's call this file file_with_dataset_path.txt. Metric Calculator reads this text file to get the absolute path of the datasets it need to process.
- Each line in this text file corresponds to a dataset. If you only have one dataset to process, you just need to have one line in this file.
- ```
- example:
- if the dataset is present at /home/user/vaibhav/java_dataset.zip
- then, the file_with_dataset_path.txt will contain just one line, which is  
- /home/user/vaibhav/java_dataset.zip  
- If you have more than one datasets, you can provide their paths in separat lines.  
-```
-
  Follow the following steps to generate input
 ```
  In a terminal, go to the root folder of Oreo.
  Change directory to java-parser
  
- run ant command to create jar
+ run ant command to create the needed jar:
  
  ant metric
 
  run jar with following command
  
- java -jar dist/metricCalculator.jar <file_with_dataset_path> <input_mode>
-```
- input_mode is one of `zip`, `tgz`, or `dir`  
- file_with_dataset_path is the absolute path to the file which contains the absolute path to the dataset  
+ then, change the directory to the root folder of Oreo, and then change to python_scripts directory
+ there, you need to run the metricCalculationWorkManager.py script that launches the jar file for metric calculation. This script is rin as follows:
+ python3 metricCalculationWorkManager.py <number of processes> <type of input which is either directory or zip> <absolute path to input>
+ ```
+ `<number of processes>` can be any number of processes you want to execute this script. To make things simple, we'll continue with 1 process; however, one can specify any number he/she desires to.
+ `<type of input which is either directory or zip>` enter `d` if your input type is directory, and enter `z` if it is tgz or zip
+ `<absolute path to input directory>` enter the absolute path to your input directory or `zip` or `tgz` file.
 
- When the process ends, an output file named mlcc_input.file will be created. This file can be now used as an input for Oreo.
+ When the process ends, you will have several directories created in the `python_scripts` directory based on the number of processes you have specified. an output file named mlcc_input.file will be created. This file can be now used as an input for Oreo.
  To find this file on the filesystem, look for a folder with a sufix `_metric_output`. This folder will be sibling to the directory which contains the `<file_with_dataset_path>` file. 
  I know this is confusin, in future, we will make it simpler.
 
