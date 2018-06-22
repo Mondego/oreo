@@ -19,20 +19,17 @@
  run ant command to create the needed jar:
  
  ant metric
-
- run jar with following command
- 
- then, change the directory to the root folder of Oreo, and then change to python_scripts directory
- there, you need to run the metricCalculationWorkManager.py script that launches the jar file for metric calculation. This script is rin as follows:
+ ```
+ then, again change the directory to the root folder of Oreo, and then change to python_scripts directory
+ there, you need to run the `metricCalculationWorkManager.py` script that launches the jar file for metric calculation. This script should be run as follows:
+ ```
  python3 metricCalculationWorkManager.py <number of processes> <type of input which is either directory or zip> <absolute path to input>
  ```
- `<number of processes>` can be any number of processes you want to execute this script. To make things simple, we'll continue with 1 process; however, one can specify any number he/she desires to.
- `<type of input which is either directory or zip>` enter `d` if your input type is directory, and enter `z` if it is tgz or zip
- `<absolute path to input directory>` enter the absolute path to your input directory or `zip` or `tgz` file.
+ `<number of processes>` can be any number of processes you want to execute this script with. To make the execution process simple, set this number to 1; however, one can specify any number he/she desires to.
+ `<type of input which is either directory or zip>` enter `d` if your input type is directory, and enter `z` if it is `tgz` or `zip`
+ `<absolute path to input>` enter the absolute path to your input directory or input the `zip` or `tgz` file.
 
- When the process ends, you will have several directories created in the `python_scripts` directory based on the number of processes you have specified. an output file named mlcc_input.file will be created. This file can be now used as an input for Oreo.
- To find this file on the filesystem, look for a folder with a sufix `_metric_output`. This folder will be sibling to the directory which contains the `<file_with_dataset_path>` file. 
- I know this is confusin, in future, we will make it simpler.
+ When the process ends, you will have several sub-directories created in the `python_scripts` directory based on the number of processes you have specified. These files are in the format of `<number>_metric_output` where `<number>` is the process number. Since in our example the number of processes is 1, there would be a single sub-directory named `1_metric_output`. Inside this sub-directory, there is an output file named `mlcc_input.file`. This file will be used as an input for Oreo. Please note that if you have executed `metricCalculationWorkManager.py` with several processes, you will have several `<number>_metric_output`  files (equal to the number of processes you have speficied), and you need to concatenate all `mlcc_input.file` files inside each process's sub-directory to have a single file. In our example of having one process, you just need `mlcc_input.file` which is inside `1_metric_output` subdirectory.
 
 ## Setting Up Oreo
 
