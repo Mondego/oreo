@@ -23,6 +23,7 @@ def run_command(cmd, outFile, errFile):
                          stderr=subprocess.PIPE,
                          universal_newlines=True
                          )
+    
    # while (True):
    #     returncode = p.poll()  # returns None while subprocess is running
    #     outputLine = p.stdout.readline()
@@ -53,7 +54,7 @@ if __name__ == '__main__':
         print("Please provide all arguments")
 if(type_input=='z' or type_input=='d'):
 
-    main_dir="/scratch/mondego/local/farima/new_oreo/scalability_related/dataset/dataset/"
+    main_dir="/scratch/mondego/local/farima/new_oreo/recall_related/recall_dataset"
     # main_dir="D:\\PhD\\Clone\\MlCC-New\\SourcererCC\\test_input"
     if(type_input=="z"):
         subdirs=[]

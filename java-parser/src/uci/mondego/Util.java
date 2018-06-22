@@ -17,7 +17,7 @@ public class Util {
     
     public static Set<String> stopwordsActionTokens;
     //public static String stopwordsActionTokensFilepath="/home/sourcerer/oreo_related/SourcererCC/java-parser/res/stopwordsActionTokens.txt";
-    public static String stopwordsActionTokensFilepath="res/stopwordsActionTokens.txt";
+    public static String stopwordsActionTokensFilepath="../java-parser/res/stopwordsActionTokens.txt";
     static{
         BufferedReader br;
         Util.stopwordsActionTokens = new HashSet<String>();
