@@ -32,7 +32,7 @@
 
  run jar with following command
  
- java -jar dist/metricCalculator.jar <input_mode> <file_with_dataset_path>
+ java -jar dist/metricCalculator.jar <file_with_dataset_path> <input_mode>
 ```
  input_mode is one of `zip`, `tgz`, or `dir`  
  file_with_dataset_path is the absolute path to the file which contains the absolute path to the dataset  
