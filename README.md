@@ -43,7 +43,7 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  and other which consumes this candidates and predicts whether they are clone pairs or not. 
  To run Oreo, we need to tell Oreo where these candidates will be generated. 
  ```
- now change the directory to Oreo's root directory, that is to oreo/
+ now change the directory to Oreo's root directory, and then too clone-detector. That is to oreo/clone-detector/
  open the file sourcerercc.properties.
  ```
  (we reused a lot of code from SourcererCC to make Oreo, and hence the name sourcerercc.properties.)
@@ -93,6 +93,6 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  This will run the code to generate candidate pairs. 
  Now, open another terminal and change directory to oreo/python_scripts. and Run following command 
  
- `python runPredictor.sh`
+ `./runPredictor.sh`
  
  This will consume candidates and produce clone pairs in the output directory. 
