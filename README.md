@@ -9,7 +9,7 @@
 ## Generate Input for Oreo
  To be able to find method level clone pairs using Oreo, you will need to provide an input file on which Oreo will detect clone pairs.
  To generate this input file you can use a tool called `Metric Calculator`, which we provide with Oreo. The tool needs to know the path of the dataset for which this input file needs to be created. 
- We support dataset in various formats like `tgz`, `zip`, or usual `linux directory`. If the dataset is presented as a `zip` file, the Metric Claculator will go throught the zip will and all the subdirectories inside it looking for the .java files. It will then calculate metrics of the methods found in these files. And finally it will create an output file where each line corresponds to information about one method. This file then can be used as an input to Oreo.
+ We support dataset in various formats like `zip`, or usual `linux directory`. If the dataset is presented as a `zip` file, the Metric Claculator will go throught the zip will and all the subdirectories inside it looking for the .java files. It will then calculate metrics of the methods found in these files. And finally it will create an output file where each line corresponds to information about one method. This file then can be used as an input to Oreo.
 
  Follow the following steps to generate input
 ```
@@ -26,7 +26,7 @@
  python3 metricCalculationWorkManager.py <number of processes> <type of input which is either directory or zip> <absolute path to input>
  ```
  `<number of processes>` can be any number of processes you want to execute this script with. To make the execution process simple, set this number to 1; however, one can specify any number he/she desires to.
- `<type of input which is either directory or zip>` enter `d` if your input type is directory, and enter `z` if it is `tgz` or `zip`
+ `<type of input which is either directory or zip>` enter `d` if your input type is directory, and enter `z` if it is `zip`
  `<absolute path to input>` enter the absolute path to your input directory or input the `zip` or `tgz` file.
 
  When the process ends, you will have several sub-directories created in the `python_scripts` directory based on the number of processes you have specified. These files are in the format of `<number>_metric_output` where `<number>` is the process number. Since in our example the number of processes is 1, there would be a single sub-directory named `1_metric_output`. Inside this sub-directory, there is an output file named `mlcc_input.file`. This file will be used as an input for Oreo. Please note that if you have executed `metricCalculationWorkManager.py` with several processes, you will have several `<number>_metric_output`  files (equal to the number of processes you have speficied), and you need to concatenate all `mlcc_input.file` files inside each process's sub-directory to have a single file. In our example of having one process, you just need `mlcc_input.file` which is inside `1_metric_output` subdirectory.
@@ -86,7 +86,7 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  ## Running Oreo
  After settip up Oreo, follow the following steps to run it.
  
- from the root of Oreo run following command.
+ Change the directory to the root of Oreo, and then to clone-detector. There, run following command.
  
  `python controller.py 1`
  
