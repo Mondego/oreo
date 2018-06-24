@@ -30,9 +30,9 @@ class Predictor(object):
         self.num_candidates_32 = 0
         self.array_31 = []
         self.array_32 = []
-        self.modelfilename_type31 = '/scratch/mondego/local/farima/tensorFlow/experiments/models/trained_model3_best_precision.h5'
-        self.loadModel()
         self.output_dir = '/scratch/mondego/local/farima/oreo-artifact/results/predictions/'
+        self.modelfilename_type31 = '/scratch/mondego/local/farima/oreo_model_fse.h5'
+        self.loadModel()
 
         if (not os.path.isdir(self.output_dir)):
             os.makedirs(self.output_dir)

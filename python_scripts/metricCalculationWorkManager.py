@@ -16,11 +16,11 @@ def full_script_path(string, param=""):
 
 def run_command(cmd, outFile, errFile):
     print("running new command {}".format(" ".join(cmd)))
-    #fo = open(outFile, "w")
-    #fe = open(errFile, "w")
+    fo = open(outFile, "w")
+    fe = open(errFile, "w")
     p = subprocess.Popen(cmd,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE,
+                         stdout=fo,
+                         stderr=fe,
                          universal_newlines=True
                          )
     
