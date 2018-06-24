@@ -11,35 +11,25 @@
  To generate this input file you can use a tool called `Metric Calculator`, which we provide with Oreo. The tool needs to know the path of the dataset for which this input file needs to be created. 
  We support dataset in various formats like `tgz`, `zip`, or usual `linux directory`. If the dataset is presented as a `zip` file, the Metric Claculator will go throught the zip will and all the subdirectories inside it looking for the .java files. It will then calculate metrics of the methods found in these files. And finally it will create an output file where each line corresponds to information about one method. This file then can be used as an input to Oreo.
 
- Before we go further, you will need to create a text file. To make things easier let's call this file file_with_dataset_path.txt. Metric Calculator reads this text file to get the absolute path of the datasets it need to process.
- Each line in this text file corresponds to a dataset. If you only have one dataset to process, you just need to have one line in this file.
- ```
- example:
- if the dataset is present at /home/user/vaibhav/java_dataset.zip
- then, the file_with_dataset_path.txt will contain just one line, which is  
- /home/user/vaibhav/java_dataset.zip  
- If you have more than one datasets, you can provide their paths in separat lines.  
-```
-
  Follow the following steps to generate input
 ```
  In a terminal, go to the root folder of Oreo.
  Change directory to java-parser
  
- run ant command to create jar
+ run ant command to create the needed jar:
  
  ant metric
+ ```
+ then, again change the directory to the root folder of Oreo, and then change to python_scripts directory
+ there, you need to run the `metricCalculationWorkManager.py` script that launches the jar file for metric calculation. This script should be run as follows:
+ ```
+ python3 metricCalculationWorkManager.py <number of processes> <type of input which is either directory or zip> <absolute path to input>
+ ```
+ `<number of processes>` can be any number of processes you want to execute this script with. To make the execution process simple, set this number to 1; however, one can specify any number he/she desires to.
+ `<type of input which is either directory or zip>` enter `d` if your input type is directory, and enter `z` if it is `tgz` or `zip`
+ `<absolute path to input>` enter the absolute path to your input directory or input the `zip` or `tgz` file.
 
- run jar with following command
- 
- java -jar dist/metricCalculator.jar <file_with_dataset_path> <input_mode>
-```
- input_mode is one of `zip`, `tgz`, or `dir`  
- file_with_dataset_path is the absolute path to the file which contains the absolute path to the dataset  
-
- When the process ends, an output file named mlcc_input.file will be created. This file can be now used as an input for Oreo.
- To find this file on the filesystem, look for a folder with a sufix `_metric_output`. This folder will be sibling to the directory which contains the `<file_with_dataset_path>` file. 
- I know this is confusin, in future, we will make it simpler.
+ When the process ends, you will have several sub-directories created in the `python_scripts` directory based on the number of processes you have specified. These files are in the format of `<number>_metric_output` where `<number>` is the process number. Since in our example the number of processes is 1, there would be a single sub-directory named `1_metric_output`. Inside this sub-directory, there is an output file named `mlcc_input.file`. This file will be used as an input for Oreo. Please note that if you have executed `metricCalculationWorkManager.py` with several processes, you will have several `<number>_metric_output`  files (equal to the number of processes you have speficied), and you need to concatenate all `mlcc_input.file` files inside each process's sub-directory to have a single file. In our example of having one process, you just need `mlcc_input.file` which is inside `1_metric_output` subdirectory.
 
 ## Setting Up Oreo
 
@@ -53,7 +43,7 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  and other which consumes this candidates and predicts whether they are clone pairs or not. 
  To run Oreo, we need to tell Oreo where these candidates will be generated. 
  ```
- now change the directory to Oreo's root directory, that is to oreo/
+ now change the directory to Oreo's root directory, and then too clone-detector. That is to oreo/clone-detector/
  open the file sourcerercc.properties.
  ```
  (we reused a lot of code from SourcererCC to make Oreo, and hence the name sourcerercc.properties.)
@@ -103,6 +93,6 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  This will run the code to generate candidate pairs. 
  Now, open another terminal and change directory to oreo/python_scripts. and Run following command 
  
- `python runPredictor.sh`
+ `./runPredictor.sh`
  
  This will consume candidates and produce clone pairs in the output directory. 
