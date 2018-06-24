@@ -47,14 +47,15 @@ def run_command(cmd, outFile, errFile):
 
 if __name__ == '__main__':
     num_process = 2
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         num_process = int(sys.argv[1])
         type_input=sys.argv[2]
+        main_dir=sys.argv[3]
     else:
         print("Please provide all arguments")
 if(type_input=='z' or type_input=='d'):
 
-    main_dir="/scratch/mondego/local/farima/new_oreo/recall_related/recall_dataset"
+    #main_dir="/scratch/mondego/local/farima/new_oreo/recall_related/recall_dataset"
     # main_dir="D:\\PhD\\Clone\\MlCC-New\\SourcererCC\\test_input"
     if(type_input=="z"):
         subdirs=[]

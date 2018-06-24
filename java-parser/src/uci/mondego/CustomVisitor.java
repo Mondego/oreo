@@ -21,7 +21,7 @@ public class CustomVisitor extends TreeVisitor {
     Path path;
     SourceCodeLineCounter sourceCodeLineCounter;
     boolean APPLY_SLOC_FILTER = true;
-    int MIN_SLOC_ALLOWED = 10;
+    int MIN_SLOC_ALLOWED = 0;
 
     public CustomVisitor(File file) {
         super();

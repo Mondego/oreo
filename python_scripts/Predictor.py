@@ -32,7 +32,7 @@ class Predictor(object):
         self.array_32 = []
         self.modelfilename_type31 = '/scratch/mondego/local/farima/tensorFlow/experiments/models/trained_model3_best_precision.h5'
         self.loadModel()
-        self.output_dir = '/scratch/mondego/local/farima/tensorFlow/experiments/results/IC/TN/predictions'
+        self.output_dir = '/scratch/mondego/local/farima/oreo-artifact/results/predictions/'
 
         if (not os.path.isdir(self.output_dir)):
             os.makedirs(self.output_dir)
@@ -46,7 +46,7 @@ class Predictor(object):
         self.files_processed = set()
         self.files_to_consider = []
         self.candidates_dir = "{directory}/{port}".format(
-            directory='/scratch/mondego/local/farima/tensorFlow/experiments/results/IC/TN/candidates',
+            directory='/scratch/mondego/local/farima/oreo-artifact/results/candidates/',
             port=self.socketPort)
         self.candidateListFile = "{directory}/candidatesList.txt".format(directory=self.candidates_dir)
         self.FINISHED = 0
@@ -86,9 +86,9 @@ class Predictor(object):
             print("prediction took: {sec} seconds ".format(sec=(end_process_pred - start_process_pred)))
             for i in range(predictions.shape[0]):
                 #for reporting clones: use this if condition:
-                #if predictions[i]:
+                if predictions[i]:
                 #for reporting non-clones: use this condition:
-                if not predictions[i]:
+                #if not predictions[i]:
                     self.clone_pairs += (str(array_pred[i][0]) + ',' + str(array_pred[i][1]) + '\n')
                     self.clone_pairs_count += 1
                     if self.clone_pairs_count > 0 and self.clone_pairs_count % self.CLONE_FILE_SIZE == 0:

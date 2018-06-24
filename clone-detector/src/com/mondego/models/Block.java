@@ -73,7 +73,7 @@ public class Block {
         this.minCandidateActionTokens = BlockInfo.getMinimumSimilarityThreshold(this.numActionTokens, SearchManager.th);
         this.maxCandidateActionTokens = BlockInfo.getMaximumSimilarityThreshold(this.numActionTokens, SearchManager.th);
         this.numTotalActionToken = this.numActionTokens;// + this.numStopActionToken;//+ this.numMethodNameActionToken;
-        int pad=0;
+        int pad= -55;
         this.minCandidateTotalActionTokens = BlockInfo.getMinimumSimilarityThreshold(this.numTotalActionToken,
                 SearchManager.th+pad);
         this.maxCandidateTotalActionTokens = BlockInfo.getMaximumSimilarityThreshold(this.numTotalActionToken,
