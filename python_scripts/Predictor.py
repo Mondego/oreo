@@ -29,8 +29,9 @@ class Predictor(object):
         self.num_candidates_32 = 0
         self.array_31 = []
         self.array_32 = []
-        self.output_dir = '/scratch/mondego/local/farima/oreo-artifact/results/predictions/'
-        self.modelfilename_type31 = '/scratch/mondego/local/farima/oreo_model_fse.h5'
+        self.output_dir = os.path.join(os.path.dirname(__file__), '../results/predictions/')
+        #print( os.path.join(os.path.dirname(__file__), '../ml_model/oreo_model_fse.h5'))
+        self.modelfilename_type31 = os.path.join(os.path.dirname(__file__), '../ml_model/oreo_model_fse.h5')
         self.loadModel()
 
         if (not os.path.isdir(self.output_dir)):
@@ -45,7 +46,7 @@ class Predictor(object):
         self.files_processed = set()
         self.files_to_consider = []
         self.candidates_dir = "{directory}/{port}".format(
-            directory='/scratch/mondego/local/farima/oreo-artifact/results/candidates/',
+            directory=os.path.join(os.path.dirname(__file__), '../results/candidates/'),
             port=self.socketPort)
         self.candidateListFile = "{directory}/candidatesList.txt".format(directory=self.candidates_dir)
         self.FINISHED = 0
