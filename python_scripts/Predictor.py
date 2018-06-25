@@ -17,14 +17,13 @@ import shutil
 class Predictor(object):
 
     def __init__(self, port):
-        self.colNames = ["block1", "block2", "isClone", "COMP1", "NOS1", "HVOC1", "HEFF1", "CREF1", "XMET1", "LMET1",
-                         "NOA1", "HDIF1", "VDEC1", "EXCT1", "EXCR1", "CAST1",
-                         "NAND1", "VREF1", "NOPR1", "MDN1", "NEXP1", "LOOP1", "NBLTRL1", "NCLTRL1", "NNLTRL1",
-                         "NNULLTRL1", "NSLTRL1", "COMP2", "NOS2", "HVOC2", "HEFF2", "CREF2",
-                         "XMET2", "LMET2", "NOA2", "HDIF2", "VDEC2", "EXCT2", "EXCR2", "CAST2", "NAND2", "VREF2",
-                         "NOPR2", "MDN2", "NEXP2", "LOOP2", "NBLTRL2", "NCLTRL2", "NNLTRL2",
-                         "NNULLTRL2", "NSLTRL2"]
-
+        self.colNames = ["block1", "block2", "isClone", "COMP1","COMP2", "NOS1", "NOS2", "HVOC1", "HVOC2", "HEFF1", "HEFF2",
+                         "CREF1", "CREF2", "XMET1", "XMET2",  "LMET1", "LMET2",
+                         "NOA1", "NOA2", "HDIF1", "HDIF2", "VDEC1", "VDEC2", "EXCT1", "EXCT2", "EXCR1", "EXCR2", "CAST1", "CAST2",
+                         "NAND1", "NAND2", "VREF1", "VREF2", "NOPR1", "NOPR2", "MDN1", "MDN2", "NEXP1", "NEXP2", "LOOP1", "LOOP2",
+                         "NBLTRL1", "NBLTRL2", "NCLTRL1", "NCLTRL2", "NNLTRL1", "NNLTRL2",
+                         "NNULLTRL1", "NNULLTRL2", "NSLTRL1", "NSLTRL2"]
+                
         self.thread_counter = 0
         self.num_candidates_31 = 0
         self.num_candidates_32 = 0
