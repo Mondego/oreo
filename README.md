@@ -64,7 +64,7 @@ Before going futher, make sure you have Java 8 and Python3.6 installed.
  
  This trained model can be downloaded from this link:
  
- https://drive.google.com/open?id=1TiKTWFn9T7XMdvFwl7lIzwxEqjoDvrbq
+ https://drive.google.com/drive/folders/1CHAYFbF42ZzZTGNnkfMg0MSiRdzFZwln?usp=sharing 
  
  ```
  ### Install dependencies.
