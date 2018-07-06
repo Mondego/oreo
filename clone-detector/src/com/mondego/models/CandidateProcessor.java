@@ -230,15 +230,24 @@ public class CandidateProcessor implements IListener, Runnable {
                 }
                 if (simInfo.totalActionTokenSimilarity >= minPosibleSimilarity) {
                     logger.debug("similarity is: " + simInfo.totalActionTokenSimilarity);
-                    if (candidateBlock.metriHash.equals(this.qc.queryBlock.metriHash)) {
-                        // this is type 2
-                        // ignore for training.
-                        continue;
+                    String type = "3.3";
+                    if (SearchManager.properties.getBoolean("IS_TRAIN_MODE")) {
+                        if (candidateBlock.metriHash.equals(this.qc.queryBlock.metriHash)) {
+                            // this is type 2
+                            // ignore for training.
+                            continue;
+                        }
+                    }else{
+                        if (candidateBlock.metriHash.equals(this.qc.queryBlock.metriHash)) {
+                            type = "2";
+                        }
                     }
                     
-                    String type = "3.3";
-                    double textualDiff = this.getPercentageDiff(candidateBlock.size, this.qc.queryBlock.size, 0); 
-                    if (textualDiff < 11) {
+                    double textualDiff = this.getPercentageDiff(candidateBlock.size, this.qc.queryBlock.size, 0);
+                    if ("2".equals(type)){
+                        type="2"; // redundant. but I have it here for easyness 
+                    }
+                    else if (textualDiff < 11) {
                         type = "3.1";
                     } else if (textualDiff >=11 && textualDiff <30){
                         type = "3.2";
@@ -253,14 +262,14 @@ public class CandidateProcessor implements IListener, Runnable {
                     logger.debug("CALCULATING turn: "+ turn+", totalSockets: "+totalSockets+", port: "+ port);*/
                     
                     //this.sendLine(type + "#$#" + line);
-                    this.sendLinePerShard(this.qc.queryBlock.shard, type + "#$#" + line);
+                    this.sendLinePerShard(this.qc.queryBlock.shard, type, type + "#$#" + line);
                     //SearchManager.getSocketWriter("localhost", port).writeToSocket(type + "#$#" + line);
                 }
             }
         }
     }
     
-    private void sendLine(String line){
+    /*private void sendLine(String line){
         synchronized (SearchManager.theInstance) {
             int limitPerFile = 100000;
             int port = ThreadLocalRandom.current().nextInt(SearchManager.properties.getInt("START_PORT"), SearchManager.properties.getInt("END_PORT") + 1);
@@ -273,17 +282,18 @@ public class CandidateProcessor implements IListener, Runnable {
             }
         }
     }
+    */
     
-    private void sendLinePerShard(Shard shard, String line){
+    private void sendLinePerShard(Shard shard, String type, String line){
         synchronized (SearchManager.theInstance) {
             int limitPerFile = 100000;
             int shardId = shard.getId();
-            int count = SearchManager.updateClonePairsCount(1, shardId);
+            int count = SearchManager.updateClonePairsCount(1, shardId, type);
             int nextFileCounter = (int) (count/limitPerFile);
             try {
-                Util.writeToFile(SearchManager.getCandidatesWriter(shardId, nextFileCounter), line, true);
+                Util.writeToFile(SearchManager.getCandidatesWriter(shardId, nextFileCounter, type), line, true);
             } catch (IOException e) {
-                logger.error("error while writing to file, port: "+shardId+", filecounter: "+nextFileCounter+", count: "+count, e);
+                logger.error("error while writing to file, shard: "+shardId+", filecounter: "+nextFileCounter+", count: "+count+", type: "+type, e);
             }
         }
     }

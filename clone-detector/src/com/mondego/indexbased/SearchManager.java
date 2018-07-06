@@ -147,7 +147,7 @@ public class SearchManager {
     public static SocketWriter socketWriter;
     public static Map<String, SocketWriter> socketWriters;
     public static int queriesProcessed;
-    public static Map<Integer, Integer> clientWiseCandidatesCount;
+    public static Map<String, Integer> clientWiseCandidatesCount;
     public static Map<Integer, String> clinetWiseCandidateListFile;
     public static Map<String, String> keyWiseCandidateFilePath;
     public static Map<Integer, Integer> clientWiseCurrentCandidateFileNum;
@@ -172,7 +172,7 @@ public class SearchManager {
         this.clonePairs = new HashSet<CloneLabel_CW>();
         this.trainWriters = new HashMap<String, Writer>();
         this.candidateWriters = new HashMap<String, Writer>();
-        SearchManager.clientWiseCandidatesCount = new HashMap<Integer, Integer>();
+        SearchManager.clientWiseCandidatesCount = new HashMap<String, Integer>();
         SearchManager.clinetWiseCandidateListFile = new HashMap<Integer, String>();
 
         SearchManager.keyWiseCandidateFilePath = new HashMap<String, String>();
@@ -1158,15 +1158,16 @@ public class SearchManager {
 
     }
 
-    public static int updateClonePairsCount(int num, int port) {
+    public static int updateClonePairsCount(int num, int port, String type) {
         synchronized (theInstance) {
             SearchManager.clonePairsCount += num;
             int count = 0;
-            if (SearchManager.clientWiseCandidatesCount.containsKey(port)) {
-                count = SearchManager.clientWiseCandidatesCount.get(port);
-                SearchManager.clientWiseCandidatesCount.put(port, count + 1);
+            String key = port+":"+type;
+            if (SearchManager.clientWiseCandidatesCount.containsKey(key)) {
+                count = SearchManager.clientWiseCandidatesCount.get(key);
+                SearchManager.clientWiseCandidatesCount.put(key, count + 1);
             } else {
-                SearchManager.clientWiseCandidatesCount.put(port, count + 1);
+                SearchManager.clientWiseCandidatesCount.put(key, count + 1);
             }
             return count + 1;
         }
@@ -1191,9 +1192,9 @@ public class SearchManager {
         }
     }
 
-    public static Writer getCandidatesWriter(int port, int count) throws IOException {
+    public static Writer getCandidatesWriter(int port, int count, String type) throws IOException {
         synchronized (theInstance) {
-            String key = port + ":" + count;
+            String key = type+"_" + port + "_" + count;
             if (!SearchManager.candidateWriters.containsKey(key)) {
                 Util.createDirs(SearchManager.properties.getString("CANDIDATES_DIR") + "/" + port);
                 String filePath = SearchManager.properties.getString("CANDIDATES_DIR") + "/" + port + "/" + key
@@ -1202,7 +1203,7 @@ public class SearchManager {
                 SearchManager.keyWiseCandidateFilePath.put(key, filePath);
                 SearchManager.clientWiseCurrentCandidateFileNum.put(port, count);
                 // write completed file path
-                String previousKey = port + ":" + (count - 1);
+                String previousKey = type+"_" + port + "_" + (count - 1);
                 if (SearchManager.candidateWriters.containsKey(previousKey)) {
                     // close the candiadte pair file
                     Util.closeOutputFile(SearchManager.candidateWriters.get(previousKey));
