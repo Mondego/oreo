@@ -28,7 +28,7 @@ public class DirExplorer {
                     }
                 }
                 if (file.isDirectory()) {
-                    results.addAll(finder(file.getName()));
+                    results.addAll(finder(file.getAbsolutePath()));
                 }
             }
         }else{
