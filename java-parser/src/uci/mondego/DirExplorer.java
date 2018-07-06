@@ -20,18 +20,20 @@ public class DirExplorer {
         List<File> results = new ArrayList<File>();
 
         File dir = new File(dirName);
-
-        for (File file : dir.listFiles()) {
-            if (file.isFile()) {
-                if (file.getName().endsWith(".java")) {
-                    results.add(file);
+        if (null!=dir && dir.exists()){
+            for (File file : dir.listFiles()) {
+                if (file.isFile()) {
+                    if (file.getName().endsWith(".java")) {
+                        results.add(file);
+                    }
+                }
+                if (file.isDirectory()) {
+                    results.addAll(finder(file.getName()));
                 }
             }
-            if (file.isDirectory()) {
-                results.addAll(finder(file.getName()));
-            }
+        }else{
+            System.out.println(dirName+ " does not exist.");
         }
-
         return results;
     }
 
