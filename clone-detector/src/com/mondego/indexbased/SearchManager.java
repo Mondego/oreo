@@ -39,6 +39,7 @@ import com.mondego.models.CandidatePair;
 import com.mondego.models.CandidateProcessor;
 import com.mondego.models.CandidateSearcher;
 import com.mondego.models.CloneLabel;
+import com.mondego.models.CloneLabel_CW;
 import com.mondego.models.ClonePair;
 import com.mondego.models.CloneReporter;
 import com.mondego.models.CloneValidator;
@@ -142,7 +143,7 @@ public class SearchManager {
     public static Map<Long, Block> documentsForII;
     public static HashMap<String, String> ijaMapping;
     public static HashMap<String, String> tokensMapping;
-    public static Set<CloneLabel> clonePairs;
+    public static Set<CloneLabel_CW> clonePairs;
     public static SocketWriter socketWriter;
     public static Map<String, SocketWriter> socketWriters;
     public static int queriesProcessed;
@@ -168,7 +169,7 @@ public class SearchManager {
         SearchManager.globalWordFreqMap = new HashMap<String, Long>();
         this.ijaMapping = new HashMap<String, String>();
         this.tokensMapping = new HashMap<String, String>();
-        this.clonePairs = new HashSet<CloneLabel>();
+        this.clonePairs = new HashSet<CloneLabel_CW>();
         this.trainWriters = new HashMap<String, Writer>();
         this.candidateWriters = new HashMap<String, Writer>();
         SearchManager.clientWiseCandidatesCount = new HashMap<Integer, Integer>();
@@ -1113,7 +1114,7 @@ public class SearchManager {
                                                     // 25 tokens
                 try {
 
-                    SearchManager.clonePairs.add(new CloneLabel(line));
+                    SearchManager.clonePairs.add(new CloneLabel_CW(line));
                     counter++;
                     logger.debug("clone labels loded: " + counter);
                 } catch (NumberFormatException e) {

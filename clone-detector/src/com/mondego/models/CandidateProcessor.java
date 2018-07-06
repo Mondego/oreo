@@ -151,6 +151,40 @@ public class CandidateProcessor implements IListener, Runnable {
 
         for (int i = 0; i < queryBlock.metrics.size(); i++) {
             features.add(queryBlock.metrics.get(i) + "");
+        }
+        for (int i = 0; i < queryBlock.metrics.size(); i++) {
+            features.add(candiadteBlock.metrics.get(i) + "");
+        }
+        return features;
+    }
+    
+    private List<String> getLineToWriteForDeepLearning_CW(Block queryBlock, Block candiadteBlock) {
+
+        List<String> features = new ArrayList<String>();
+        features.add(queryBlock.getMethodIdentifier());
+        features.add(candiadteBlock.getMethodIdentifier());
+        CloneLabel_CW cp = new CloneLabel_CW(queryBlock.projectName+"/"+queryBlock.fileName,queryBlock.startLine,queryBlock.endLine,
+                candiadteBlock.projectName+"/"+candiadteBlock.fileName, candiadteBlock.startLine, candiadteBlock.endLine);
+        if (SearchManager.properties.getBoolean("IS_TRAIN_MODE")) {
+            if (SearchManager.clonePairs.contains(cp)) {
+                features.add("1");
+            } else {
+                cp = new CloneLabel_CW(candiadteBlock.projectName+"/"+candiadteBlock.fileName,candiadteBlock.startLine,candiadteBlock.endLine,
+                        queryBlock.projectName+"/"+queryBlock.fileName, queryBlock.startLine, queryBlock.endLine);
+                if (SearchManager.clonePairs.contains(cp)) {
+                    features.add("1");
+                } else {
+                    features.add("0");
+                }
+            }
+        } else {
+            features.add("0");
+        }
+
+        for (int i = 0; i < queryBlock.metrics.size(); i++) {
+            features.add(queryBlock.metrics.get(i) + "");
+        }
+        for (int i = 0; i < queryBlock.metrics.size(); i++) {
             features.add(candiadteBlock.metrics.get(i) + "");
         }
         return features;
@@ -196,13 +230,20 @@ public class CandidateProcessor implements IListener, Runnable {
                 }
                 if (simInfo.totalActionTokenSimilarity >= minPosibleSimilarity) {
                     logger.debug("similarity is: " + simInfo.totalActionTokenSimilarity);
-                    String type = "3.2";
                     if (candidateBlock.metriHash.equals(this.qc.queryBlock.metriHash)) {
-                        type = "2";
-                    } else if (this.getPercentageDiff(candidateBlock.size, this.qc.queryBlock.size, 0) < 11) {
-                        type = "3.1";
+                        // this is type 2
+                        // ignore for training.
+                        continue;
                     }
-                    String line = this.getLineToSend(this.getLineToWriteForDeepLearning(qc.queryBlock, candidateBlock));
+                    
+                    String type = "3.3";
+                    double textualDiff = this.getPercentageDiff(candidateBlock.size, this.qc.queryBlock.size, 0); 
+                    if (textualDiff < 11) {
+                        type = "3.1";
+                    } else if (textualDiff >=11 && textualDiff <30){
+                        type = "3.2";
+                    }
+                    String line = this.getLineToSend(this.getLineToWriteForDeepLearning_CW(qc.queryBlock, candidateBlock));
                     //SearchManager.updateClonePairsCount(1);
                     //logger.debug("size of one line: " + line.getBytes(StandardCharsets.UTF_8).length);
                     /*int limitPerSocket=(int)SearchManager.properties.getInt("SOCKET_BUFFER")/350;
@@ -212,7 +253,7 @@ public class CandidateProcessor implements IListener, Runnable {
                     logger.debug("CALCULATING turn: "+ turn+", totalSockets: "+totalSockets+", port: "+ port);*/
                     
                     this.sendLine(type + "#$#" + line);
-                    
+                    this.sendLinePerShard(this.qc.queryBlock.shard, line);
                     //SearchManager.getSocketWriter("localhost", port).writeToSocket(type + "#$#" + line);
                 }
             }
@@ -231,6 +272,19 @@ public class CandidateProcessor implements IListener, Runnable {
                 logger.error("error while writing to file, port: "+port+", filecounter: "+nextFileCounter+", count: "+count, e);
             }
         }
-        
+    }
+    
+    private void sendLinePerShard(Shard shard, String line){
+        synchronized (SearchManager.theInstance) {
+            int limitPerFile = 100000;
+            int shardId = shard.getId();
+            int count = SearchManager.updateClonePairsCount(1, shardId);
+            int nextFileCounter = (int) (count/limitPerFile);
+            try {
+                Util.writeToFile(SearchManager.getCandidatesWriter(shardId, nextFileCounter), line, true);
+            } catch (IOException e) {
+                logger.error("error while writing to file, port: "+shardId+", filecounter: "+nextFileCounter+", count: "+count, e);
+            }
+        }
     }
 }
