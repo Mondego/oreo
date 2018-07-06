@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map.Entry;
-
 import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
@@ -127,7 +126,7 @@ public class CustomVisitor extends TreeVisitor {
             collector.methodId = Long.parseLong(methodId);
             // System.out.println(collector);
             this.generateInputForOreo(collector);
-            this.generateInputForScc(collector);
+            //this.generateInputForScc(collector);
         }
 
     }
@@ -141,7 +140,7 @@ public class CustomVisitor extends TreeVisitor {
 
         StringBuilder stopwordsActionTokenString = new StringBuilder("");
         String methodNameActionString = "";
-        metadataString.append(collector._path.getParent().getFileName()).append(internalSeparator)
+        metadataString.append(collector._path.getParent().toString()).append(internalSeparator)
                 .append(collector._path.getFileName()).append(internalSeparator).append(collector.START_LINE)
                 .append(internalSeparator).append(collector.END_LINE).append(internalSeparator)
                 .append(collector._methodName).append(internalSeparator).append(collector.NTOKENS)
