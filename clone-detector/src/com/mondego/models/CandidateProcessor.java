@@ -252,8 +252,8 @@ public class CandidateProcessor implements IListener, Runnable {
                     int port = SearchManager.properties.getInt("START_PORT") + turn%totalSockets;
                     logger.debug("CALCULATING turn: "+ turn+", totalSockets: "+totalSockets+", port: "+ port);*/
                     
-                    this.sendLine(type + "#$#" + line);
-                    this.sendLinePerShard(this.qc.queryBlock.shard, line);
+                    //this.sendLine(type + "#$#" + line);
+                    this.sendLinePerShard(this.qc.queryBlock.shard, type + "#$#" + line);
                     //SearchManager.getSocketWriter("localhost", port).writeToSocket(type + "#$#" + line);
                 }
             }
